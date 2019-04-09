@@ -19,7 +19,6 @@ const upload = multer({storage});
 
 const router = express.Router();
 
-
 router.get('/', (req, res) => {
     Artist.find()
         .then(artists => res.send(artists))
