@@ -1,9 +1,31 @@
 const mongoose = require('mongoose');
 const config = require('./config');
+const loremIpsum = require("lorem-ipsum").loremIpsum;
 
 const Artist = require('./models/Artist');
 const Album = require('./models/Album');
 const Track = require('./models/Track');
+
+const getRndInteger = (min, max) => {
+    return Math.floor(Math.random() * (max - min + 1) ) + min;
+};
+
+const generateRandomTracks = (albums) => {
+    const tracks = [];
+    albums.map((album) => {
+        let trackNumber = 1;
+        const numberOfTracks = getRndInteger(30, 60);
+        for (let i = 0; i < numberOfTracks; i++) {
+            tracks.push({
+                title: loremIpsum(),
+                duration: `0${getRndInteger(0, 5)}:${getRndInteger(0,60)}:${getRndInteger(0, 60)}`,
+                album: album._id,
+                number: trackNumber++
+            });
+        }
+    });
+    return tracks;
+};
 
 const run = async () => {
     await mongoose.connect(config.dbUrl, config.mongoOptions);
@@ -23,14 +45,14 @@ const run = async () => {
             bio: 'Jennifer Lynn Lopez is an American singer, actress, dancer and producer. In 1991, Lopez began appearing as a Fly Girl dancer on In Living Color, where she remained a regular until she decided to pursue an acting career in 1993.'
         },
         {
-            name: 'Nickelback',
-            image: 'artist2.jpg',
-            bio: 'Nickelback is a Canadian rock band formed in 1995 in Hanna, Alberta, Canada. The band is composed of guitarist and lead vocalist Chad Kroeger, guitarist, keyboardist and backing vocalist Ryan Peake, bassist Mike Kroeger, and drummer Daniel Adair.'
-        },
-        {
             name: 'Avril Lavigne',
             image: 'artist3.jpg',
             bio: 'Avril Ramona Lavigne is a Canadian singer, songwriter, and actress. By the age of 15, she had appeared on stage with Shania Twain and by 16, she had signed a two-album recording contract with Arista Records worth more than $2 million.'
+        },
+        {
+            name: 'Nickelback',
+            image: 'artist2.jpg',
+            bio: 'Nickelback is a Canadian rock band formed in 1995 in Hanna, Alberta, Canada. The band is composed of guitarist and lead vocalist Chad Kroeger, guitarist, keyboardist and backing vocalist Ryan Peake, bassist Mike Kroeger, and drummer Daniel Adair.'
         },
         {
             name: 'Whitney Houston',
@@ -47,9 +69,39 @@ const run = async () => {
             artist: artists[0]._id
         },
         {
+            title: 'Como Ama una Mujer',
+            year: 2007,
+            image: 'alb5.png',
+            artist: artists[0]._id
+        },
+        {
+            title: 'A.K.A',
+            year: 2014,
+            image: 'alb6.png',
+            artist: artists[0]._id
+        },
+        {
+            title: 'Love?',
+            year: 2011,
+            image: 'alb7.png',
+            artist: artists[0]._id
+        },
+        {
             title: 'Never Again',
             year: 2011,
             image: 'alb2.jpeg',
+            artist: artists[1]._id
+        },
+        {
+            title: 'Curb',
+            year: 1996,
+            image: 'alb8.jpg',
+            artist: artists[1]._id
+        },
+        {
+            title: 'The Long Road',
+            year: 2003,
+            image: 'alb9.jpg',
             artist: artists[1]._id
         },
         {
@@ -59,36 +111,54 @@ const run = async () => {
             artist: artists[2]._id
         },
         {
+            title: 'Goodbye Lullaby',
+            year: 2011,
+            image: 'alb10.png',
+            artist: artists[2]._id
+        },
+        {
+            title: 'Head Above Water',
+            year: 2019,
+            image: 'alb11.png',
+            artist: artists[2]._id
+        },
+        {
+            title: 'Under My Skin',
+            year: 2002,
+            image: 'alb12.png',
+            artist: artists[2]._id
+        },
+        {
+            title: 'Avril Lavigne',
+            year: 2013,
+            image: 'alb13.png',
+            artist: artists[2]._id
+        },
+        {
             title: 'One Wish: The Holiday Album',
             year: 2003,
             image: 'alb4.jpeg',
             artist: artists[3]._id
+        },
+        {
+            title: 'Whitney',
+            year: 1986,
+            image: 'alb14.jpg',
+            artist: artists[3]._id
+        },
+        {
+            title: 'My Love Is Your Love',
+            year: 1998,
+            image: 'alb15.jpg',
+            artist: artists[3]._id
         }
     );
 
-    await Track.create(
-        {
-            title: 'On The Floor',
-            duration: '02:00:15',
-            album: albums[0]._id
-        },
-        {
-            title: 'Burn it To the Ground',
-            duration: '04:01:05',
-            album: albums[1]._id
-        },
-        {
-            title: 'When you are gone',
-            duration: '03:25:06',
-            album: albums[2]._id
-        },
-        {
-            title: 'I will always love you',
-            duration: '03:30:45',
-            album: albums[3]._id
-        },
-    );
+    const tracks = generateRandomTracks(albums);
 
+    await Track.create(
+        ...tracks
+    );
     return connection.close();
 };
 

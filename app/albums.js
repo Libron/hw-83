@@ -26,7 +26,7 @@ router.get('/', (req, res) => {
         searchParams = {artist: req.query.artist_id};
     }
 
-    Album.find(searchParams)
+    Album.find(searchParams).populate('artist').sort({year: 'asc'})
         .then(albums => res.send(albums))
         .catch(() => res.sendStatus(500));
 });

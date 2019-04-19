@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
         Album.find({artist: req.query.artist_id})
             .then(albums => {
                 albums.map(album => {
-                    Track.find({album: album._id})
+                    Track.find({album: album._id}).sort({number: 'asc'})
                         .then(tracks => {
                             trackList.push(...tracks);
                             res.send(trackList);

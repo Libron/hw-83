@@ -15,6 +15,7 @@
     "bcrypt": "^3.0.5",
     "cors": "^2.8.5",
     "express": "^4.16.4",
+    "lorem-ipsum": "^2.0.1",
     "mongoose": "^5.5.0",
     "multer": "^1.4.1",
     "nanoid": "^2.0.1",
