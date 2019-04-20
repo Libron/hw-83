@@ -14,17 +14,15 @@ router.get('/', (req, res) => {
 
     // Дополнительное задание
     if (req.query.artist_id) {
-        const trackList = [];
         Album.find({artist: req.query.artist_id})
             .then(albums => {
-                albums.map(album => {
-                    Track.find({album: album._id}).populate('album').sort({number: 1})
-                        .then(tracks => {
-                            trackList.push(...tracks);
-                            res.send(trackList);
-                        })
-                        .catch(() => res.sendStatus(500));
-                });
+                const trackList = [];
+                Promise.all(albums.map(album => {
+                    return Track.find({album: album._id}).populate('album')
+                        .then(tracks => trackList.push(...tracks));
+                }))
+                    .then(() => res.send(trackList))
+                    .catch(e => res.status(500).send(e))
             })
             .catch(() => res.sendStatus(500));
     } else {
