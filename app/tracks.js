@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
         Album.find({artist: req.query.artist_id})
             .then(albums => {
                 albums.map(album => {
-                    Track.find({album: album._id}).sort({number: 'asc'})
+                    Track.find({album: album._id}).populate('album').sort({number: 1})
                         .then(tracks => {
                             trackList.push(...tracks);
                             res.send(trackList);
@@ -28,7 +28,7 @@ router.get('/', (req, res) => {
             })
             .catch(() => res.sendStatus(500));
     } else {
-        Track.find(searchParams)
+        Track.find(searchParams).populate('album')
             .then(tracks => res.send(tracks))
             .catch(() => res.sendStatus(500));
     }
