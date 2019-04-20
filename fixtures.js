@@ -65,7 +65,7 @@ const run = async () => {
         {
             title: 'Ain\'t It Funny',
             year: 2009,
-            image: 'alb1.jpeg',
+            image: 'alb4.jpeg',
             artist: artists[0]._id
         },
         {
@@ -96,13 +96,13 @@ const run = async () => {
             title: 'Curb',
             year: 1996,
             image: 'alb8.jpg',
-            artist: artists[1]._id
+            artist: artists[2]._id
         },
         {
             title: 'The Long Road',
             year: 2003,
             image: 'alb9.jpg',
-            artist: artists[1]._id
+            artist: artists[2]._id
         },
         {
             title: 'The Best Damn Thing',
@@ -114,36 +114,36 @@ const run = async () => {
             title: 'Goodbye Lullaby',
             year: 2011,
             image: 'alb10.png',
-            artist: artists[2]._id
+            artist: artists[1]._id
         },
         {
             title: 'Head Above Water',
             year: 2019,
             image: 'alb11.png',
-            artist: artists[2]._id
+            artist: artists[1]._id
         },
         {
             title: 'Under My Skin',
             year: 2002,
             image: 'alb12.png',
-            artist: artists[2]._id
+            artist: artists[1]._id
         },
         {
             title: 'Avril Lavigne',
             year: 2013,
             image: 'alb13.png',
-            artist: artists[2]._id
+            artist: artists[1]._id
         },
         {
             title: 'One Wish: The Holiday Album',
             year: 2003,
-            image: 'alb4.jpeg',
+            image: 'alb14.jpg',
             artist: artists[3]._id
         },
         {
             title: 'Whitney',
             year: 1986,
-            image: 'alb14.jpg',
+            image: 'alb1.jpeg',
             artist: artists[3]._id
         },
         {
