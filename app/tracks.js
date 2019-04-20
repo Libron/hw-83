@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
             .then(albums => {
                 const trackList = [];
                 Promise.all(albums.map(album => {
-                    return Track.find({album: album._id}).populate('album')
+                    return Track.find({album: album._id}).populate('album').sort({number: 'asc'})
                         .then(tracks => trackList.push(...tracks));
                 }))
                     .then(() => res.send(trackList))
@@ -26,7 +26,7 @@ router.get('/', (req, res) => {
             })
             .catch(() => res.sendStatus(500));
     } else {
-        Track.find(searchParams).populate('album')
+        Track.find(searchParams).populate('album').sort({number: 'asc'})
             .then(tracks => res.send(tracks))
             .catch(() => res.sendStatus(500));
     }
