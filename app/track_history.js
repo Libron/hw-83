@@ -1,21 +1,19 @@
 const express = require('express');
 const TrackHistory = require('../models/TrackHistory');
-const User = require('../models/User');
+const auth = require('../middleware/auth');
 
 const router = express.Router();
 
-router.post('/', async (req, res) => {
-    const token = req.get("Authorization");
+router.get('/', auth, (req, res) => {
+    TrackHistory.find({user: req.user._id}).populate('track').populate('user')
+        .then(history => res.send(history))
+        .catch(() => res.sendStatus(500));
+});
 
-    const user = await User.findOne({token});
-
-    if (!user) {
-        return res.status(401).send({error: 'Unauthorized'});
-    }
-
+router.post('/', auth, async (req, res) => {
     const trackData = req.body;
     trackData.datetime = new Date().toLocaleString();
-    trackData.user = user._id;
+    trackData.user = req.user._id;
 
     const trackHistory = new TrackHistory(trackData);
 

@@ -1,11 +1,12 @@
 const express = require('express');
+const auth = require('../middleware/auth');
 const Track = require('../models/Track');
 
 const Album = require('../models/Album');   // Дополнительное задание
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
+router.get('/', auth, (req, res) => {
     let searchParams = null;
 
     if (req.query.album_id) {
